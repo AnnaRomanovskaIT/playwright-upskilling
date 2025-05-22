@@ -10,5 +10,5 @@ test('ao3 locate parent elements', async ({ page }) => {
     await page.locator('#tos_agree').click()
     await page.locator('#data_processing_agree').click()
     await page.locator('button', {hasText: "I agree/consent to these Terms"}).click()
-    await page.locator('.work', {hasText: "Days Not Seen"}).locator('.header.module').locator('a:has-text("Days Not Seen")').click()
+    await page.locator('[role="article"]', {hasText: "Days Not Seen"}).locator('.header.module').locator('a:has-text("Days Not Seen")').click()
 })
