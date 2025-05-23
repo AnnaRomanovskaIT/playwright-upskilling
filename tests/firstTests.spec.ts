@@ -46,9 +46,9 @@ test.describe('first', () =>{
 
 test.describe('syntax locator', () => {
     test.beforeEach(async({page})=>{
-        await page.goto('http://localhost:4200/')
-        await page.getByText("Forms").click()
-        await page.getByText("Form Layouts").click()
+    await page.goto('http://localhost:4200/')
+    await page.getByText("Forms").click()
+    await page.getByText("Form Layouts").click()
     })
 
     test('locator syntax rules', async({page}) => {
@@ -75,53 +75,53 @@ test.describe('syntax locator', () => {
     test('locating child elements', async ({ page }) => {
     //parent element is nb-card
     //child element is nb-radio and have text Option 1
-    await page.locator('nb-card nb-ratio :text-is("Option 1")').click()
+    await page.locator('nb-card nb-radio:has-text("Option 1")').click()
     //or
-    await page.locator('nb-card').locator('nb-ratio').locator(':text-is("Option 1")').click()
+    await page.locator('nb-card').locator('nb-radio', {hasText: "Option 2"}).click()
 
-    await page.locator('nb-card').getByRole('button', {name: "Sign in"}).click()
+    await page.locator('nb-card').getByRole('button', {name: "Sign in"}).first().click()
     
     //get 3'd form
     await page.locator("nb-card").nth(3).getByRole('button').click()
-})
+    })
+
+    test('locating parent elements', async ({ page }) => {
+    await page.locator('nb-card', {hasText: "Using the Grid"}).getByRole('textbox', {name: "Email"}).click()
+    await page.locator('nb-card', {has: page.locator('#inputEmail1')}).click()
+    })
 })
 
 test.describe('hook and flow', () => { 
-test.beforeEach(async ({page}) => {
-    await page.goto('https://en.wikipedia.org/wiki/Wroc%C5%82aw')
-})
-
-test.describe('History section Suit', () => { 
-    test.beforeEach(async({page})=>{
-        await page.click('a.vector-toc-link:has-text("History")');
+    test.beforeEach(async ({page}) => {
+        await page.goto('https://en.wikipedia.org/wiki/Wroc%C5%82aw')
     })
 
-    test('middle ages', async ({page}) => {
-        await page.click('a.vector-toc-link:has-text("Middle Ages")');
+    test.describe('History section Suit', () => { 
+        test.beforeEach(async({page})=>{
+            await page.click('a.vector-toc-link:has-text("History")');
+        })
+
+        test('middle ages', async ({page}) => {
+            await page.click('a.vector-toc-link:has-text("Middle Ages")');
+        })
+
+        test('second world war', async ({page}) => {
+            await page.click('a.vector-toc-link:has-text("Second World War")');
+        })
     })
 
-    test('second world war', async ({page}) => {
-        await page.click('a.vector-toc-link:has-text("Second World War")');
-    })
-})
+    test.describe('Georgraphy section Suit', () => { 
+        test.beforeEach(async({page})=>{
+            await page.click('a.vector-toc-link:has-text("Geography")');
+        })
 
-test.describe('Georgraphy section Suit', () => { 
-    test.beforeEach(async({page})=>{
-        await page.click('a.vector-toc-link:has-text("Geography")');
+        test('flora and fauna', async ({page}) => {
+            await page.click('a.vector-toc-link:has-text("Flora and fauna")');
+        })
+
+        test('climate', async ({page}) => {
+            await page.click('a.vector-toc-link:has-text("Climate")');
+        })
     })
 
-    test('flora and fauna', async ({page}) => {
-        await page.click('a.vector-toc-link:has-text("Flora and fauna")');
-    })
-
-    test('climate', async ({page}) => {
-        await page.click('a.vector-toc-link:has-text("Climate")');
-    })
-})
-
-test.beforeEach(async({page})=>{
-    await page.goto('http://localhost:4200/')
-    await page.getByText("Forms").click()
-    await page.getByText("Form Layouts").click()
-})
 })
